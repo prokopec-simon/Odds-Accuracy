@@ -4,14 +4,9 @@ import GithubProvider from "next-auth/providers/github";
 export default NextAuth({
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      const isAllowedToSignIn = process.env
+      return process.env
         .NEXTAUTH_ALLOWED_EMAILS!.split(",")
         .includes(user.email!);
-      if (isAllowedToSignIn) {
-        return true;
-      } else {
-        return false;
-      }
     },
   },
   providers: [
