@@ -1,6 +1,26 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 
+import { useSession, signIn, signOut } from "next-auth/react";
+
+export function Component() {
+  const { data: session } = useSession();
+  if (session) {
+    return (
+      <>
+        Signed in as {session!.user!.email} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    );
+  }
+  return (
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
+  );
+}
+
 const Home: NextPage = () => {
   return (
     <>
@@ -13,7 +33,7 @@ const Home: NextPage = () => {
         <h1>
           Create <span>T3</span> App
         </h1>
-
+        <Component></Component>
         <div>
           <h3>This Stack uses:-</h3>
           <ul>
