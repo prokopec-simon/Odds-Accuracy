@@ -8,3 +8,41 @@ datasource db {
   url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
+
+model League {
+  id        Int      @id @default(autoincrement())
+  gameName  String
+  year      Int
+  url       String
+  createdAt DateTime @default(now())
+
+  matches Match[]
+}
+
+model Match {
+  id         Int      @id @default(autoincrement())
+  leagueId   Int
+  url        String
+  teamA      String
+  teamB      String
+  scoreTeamA Int
+  scoreTeamB Int
+  playedAt   DateTime
+  createdAt  DateTime @default(now())
+
+  league League @relation(fields: [leagueId], references: [id])
+  Odds   Odds[]
+}
+
+model Odds {
+  id               Int      @id @default(autoincrement())
+  matchId          Int
+  bookieName       String
+  oddsOpeningTeamA Float
+  oddsOpeningTeamB Float
+  oddsClosingTeamA Float
+  oddsClosingTeamB Float
+  createdAt        DateTime @default(now())
+
+  match Match @relation(fields: [matchId], references: [id])
+}
