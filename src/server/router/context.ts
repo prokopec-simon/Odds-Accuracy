@@ -3,7 +3,7 @@ import * as trpc from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 
 const { PrismaClient } = require("@prisma/client");
-
+const prisma = PrismaClient;
 export const createContext = ({
   req,
   res,
@@ -11,7 +11,7 @@ export const createContext = ({
   return {
     req,
     res,
-    PrismaClient,
+    prisma,
   };
 };
 
